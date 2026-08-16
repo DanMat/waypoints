@@ -1,4 +1,4 @@
-import type { Place } from '@waypoints/shared';
+import type { Place } from '@danmat/waypoints-core';
 import { type GeoSphere, geoGraticule10, geoInterpolate, geoNaturalEarth1, geoPath } from 'd3-geo';
 import type { FeatureCollection, Geometry } from 'geojson';
 import { useMemo } from 'react';

@@ -1,4 +1,4 @@
-import type { Stats } from '@waypoints/shared';
+import type { Stats } from '@danmat/waypoints-core';
 
 const EARTH_CIRCUMFERENCE_KM = 40075;
 const MOON_DISTANCE_KM = 384400;

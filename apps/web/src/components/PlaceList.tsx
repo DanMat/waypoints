@@ -1,4 +1,4 @@
-import type { Place } from '@waypoints/shared';
+import type { Place } from '@danmat/waypoints-core';
 import { useMemo, useState } from 'react';
 
 const fmtMonth = (ym: string): string => {

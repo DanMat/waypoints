@@ -1,4 +1,4 @@
-import type { Continent } from '@waypoints/shared';
+import type { Continent } from './domain.js';
 
 /**
  * ISO 3166-1 alpha-2 → continent. Grouped by continent for legibility, then

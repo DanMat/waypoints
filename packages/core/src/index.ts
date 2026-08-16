@@ -7,6 +7,15 @@ export {
 	stayHours,
 } from './airports.js';
 export { continentForCountry } from './continents.js';
+export {
+	CONTINENTS,
+	type Continent,
+	describeHealth,
+	type Health,
+	type Place,
+	type Stats,
+	type TravelData,
+} from './domain.js';
 export { type City, type GeoResult, NearestCityGeocoder, type ReverseGeocoder } from './geocode.js';
 export { haversineKm } from './haversine.js';
 export { parseTimeline } from './timeline.js';

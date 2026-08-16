@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "hono": "^4.5.0",
-    "@waypoints/shared": "workspace:*"
+    "@danmat/waypoints-core": "workspace:*"
   },
   "devDependencies": {
     "tsup": "^8.0.0"

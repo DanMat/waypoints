@@ -1,4 +1,4 @@
-import type { Stats } from '@waypoints/shared';
+import type { Stats } from '@danmat/waypoints-core';
 
 export function StatTiles({ stats }: { stats: Stats }) {
 	const t = stats.totals;

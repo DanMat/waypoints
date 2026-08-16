@@ -1,6 +1,6 @@
-import type { Continent, Place, Stats, TravelData } from '@waypoints/shared';
 import { type LayoverDetector, noLayovers, stayHours } from './airports.js';
 import { continentForCountry } from './continents.js';
+import type { Continent, Place, Stats, TravelData } from './domain.js';
 import type { GeoResult, ReverseGeocoder } from './geocode.js';
 import { haversineKm } from './haversine.js';
 import { parseTimeline } from './timeline.js';

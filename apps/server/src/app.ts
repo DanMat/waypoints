@@ -1,4 +1,4 @@
-import type { Health } from '@waypoints/shared';
+import type { Health } from '@danmat/waypoints-core';
 import { Hono } from 'hono';
 
 /** Minimal structural types for the Cloudflare bindings we use (no extra dep). */
