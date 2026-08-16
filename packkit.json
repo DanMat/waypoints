@@ -1,0 +1,158 @@
+{
+  "$schema": "https://packkitlabs.github.io/create-packkit-js/packkit.schema.json",
+  "generator": "create-packkit",
+  "version": "4.3.4",
+  "preset": "fullstack",
+  "settings": {
+    "description": "Privacy-first travel log built from Google Timeline data",
+    "author": "DanMat",
+    "repo": "https://github.com/DanMat/waypoints",
+    "monorepo": true,
+    "monorepoLayout": "fullstack",
+    "framework": "react",
+    "packageManager": "pnpm",
+    "lint": "biome",
+    "release": "none",
+    "workflows": [
+      "ci"
+    ]
+  },
+  "baseline": {
+    "schemaVersion": 1,
+    "files": {
+      ".editorconfig": {
+        "hash": "1811c495930b03"
+      },
+      ".github/ISSUE_TEMPLATE/bug_report.md": {
+        "hash": "14665755d4fe69"
+      },
+      ".github/ISSUE_TEMPLATE/feature_request.md": {
+        "hash": "19ef8d724b4866"
+      },
+      ".github/PULL_REQUEST_TEMPLATE.md": {
+        "hash": "174297edf0cebd"
+      },
+      ".github/workflows/ci.yml": {
+        "hash": "09cd7e37936d08"
+      },
+      ".gitignore": {
+        "hash": "1fd9c31aebe75a"
+      },
+      ".npmrc": {
+        "hash": "154fbd08123dcc"
+      },
+      ".prettierrc.json": {
+        "hash": "05a19eb6a83b83"
+      },
+      "AGENTS.md": {
+        "hash": "182466b22e19e9"
+      },
+      "CLAUDE.md": {
+        "hash": "0a3e1dac8414fa"
+      },
+      "CODE_OF_CONDUCT.md": {
+        "hash": "11130d8e94d7e7"
+      },
+      "CONTRIBUTING.md": {
+        "hash": "1dcd9bc9b8a58f"
+      },
+      "LICENSE": {
+        "hash": "039ee69aa93db9"
+      },
+      "README.md": {
+        "hash": "0bef3ce77722fd"
+      },
+      "SECURITY.md": {
+        "hash": "1fc69ca4db19fc"
+      },
+      "apps/server/package.json": {
+        "hash": "0e9dd5ffbb9bf7"
+      },
+      "apps/server/src/app.test.ts": {
+        "hash": "1cf4ccaaf6f723"
+      },
+      "apps/server/src/app.ts": {
+        "hash": "166cac2de5b999"
+      },
+      "apps/server/src/index.ts": {
+        "hash": "18fb55fb0915ad"
+      },
+      "apps/server/tsconfig.json": {
+        "hash": "0146dd7acc6fdf"
+      },
+      "apps/web/index.html": {
+        "hash": "1c6b486bd29e69"
+      },
+      "apps/web/package.json": {
+        "hash": "1df2befb7dcf0a"
+      },
+      "apps/web/src/App.test.tsx": {
+        "hash": "1301de6facf02b"
+      },
+      "apps/web/src/App.tsx": {
+        "hash": "09cc090327631b"
+      },
+      "apps/web/src/main.tsx": {
+        "hash": "1dcbbfea5d9174"
+      },
+      "apps/web/tsconfig.json": {
+        "hash": "1386a29efc1b56"
+      },
+      "apps/web/vite.config.ts": {
+        "hash": "17911097f039a2"
+      },
+      "eslint.config.js": {
+        "hash": "11deda6a3f9eaa"
+      },
+      "package.json": {
+        "hash": "1e687288cf1c09"
+      },
+      "packages/shared/package.json": {
+        "hash": "1c9b51f5d223fa"
+      },
+      "packages/shared/src/index.test.ts": {
+        "hash": "0633a807fd59fc"
+      },
+      "packages/shared/src/index.ts": {
+        "hash": "0f6fa700855bfa"
+      },
+      "packages/shared/tsconfig.json": {
+        "hash": "0146dd7acc6fdf"
+      },
+      "pnpm-workspace.yaml": {
+        "hash": "07972132ca50b4"
+      },
+      "tsconfig.base.json": {
+        "hash": "17637e28e2bee3"
+      },
+      "turbo.json": {
+        "hash": "19b88f5eda91c5"
+      }
+    },
+    "packageJson": {
+      "scripts": {
+        "dev": "turbo dev",
+        "build": "turbo build",
+        "start": "pnpm --filter ./apps/server start",
+        "test": "turbo test",
+        "lint": "turbo lint",
+        "typecheck": "turbo typecheck"
+      },
+      "dependencies": {
+        "devDependencies": {
+          "turbo": "^2.0.0",
+          "typescript": "^5.9.3",
+          "vitest": "^4.0.0",
+          "eslint": "^10.0.0",
+          "@eslint/js": "^10.0.0",
+          "typescript-eslint": "^8.0.0",
+          "prettier": "^3.3.0",
+          "@types/node": "^24.0.0"
+        }
+      },
+      "protectedFields": {
+        "packageManager": "pnpm@9.10.0"
+      }
+    }
+  }
+}
