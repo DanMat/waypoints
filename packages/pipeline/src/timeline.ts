@@ -46,12 +46,19 @@ function fromSemanticSegment(seg: unknown): Stay | null {
 	const s = seg as Record<string, unknown>;
 	const visit = s?.visit as Record<string, unknown> | undefined;
 	const candidate = visit?.topCandidate as Record<string, unknown> | undefined;
-	const placeLocation = candidate?.placeLocation as Record<string, unknown> | undefined;
-	const latLng = parseLatLng(placeLocation?.latLng);
+	if (!candidate) return null;
+	// `placeLocation` is a "geo:lat,lng" string in the on-device export, or a
+	// `{ latLng }` object in older exports.
+	const placeLocation = candidate.placeLocation;
+	const latLng =
+		typeof placeLocation === 'string'
+			? parseLatLng(placeLocation)
+			: parseLatLng((placeLocation as Record<string, unknown> | undefined)?.latLng);
 	const start = asIso(s?.startTime);
 	const end = asIso(s?.endTime);
 	if (!latLng || !start || !end) return null;
-	return { ...latLng, start, end };
+	const label = typeof candidate.semanticType === 'string' ? candidate.semanticType : undefined;
+	return { ...latLng, start, end, ...(label ? { label } : {}) };
 }
 
 function fromTimelineObject(obj: unknown): Stay | null {

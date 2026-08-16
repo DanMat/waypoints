@@ -4,7 +4,14 @@ import { continentForCountry } from './continents.js';
 import type { GeoResult, ReverseGeocoder } from './geocode.js';
 import { haversineKm } from './haversine.js';
 import { parseTimeline } from './timeline.js';
-import { type AggregateConfig, resolveConfig, type Stay } from './types.js';
+import {
+	type AggregateConfig,
+	HOME_LABELS,
+	type LatLng,
+	type ResolvedConfig,
+	resolveConfig,
+	type Stay,
+} from './types.js';
 
 export interface AggregateDeps {
 	geocoder: ReverseGeocoder;
@@ -31,6 +38,7 @@ export function aggregate(
 ): TravelData {
 	const cfg = resolveConfig(config);
 	const layovers = deps.layoverDetector ?? noLayovers;
+	const homePoints = deriveHomePoints(stays, cfg);
 
 	type Group = {
 		geo: GeoResult;
@@ -44,7 +52,8 @@ export function aggregate(
 
 	for (const stay of stays) {
 		if (stayHours(stay) * 60 < cfg.minStayMinutes) continue;
-		if (cfg.home && haversineKm(stay, cfg.home) <= cfg.homeRadiusKm) continue;
+		if (stay.label && cfg.dropLabels.includes(stay.label)) continue;
+		if (homePoints.some((h) => haversineKm(stay, h) <= cfg.homeRadiusKm)) continue;
 		if (layovers.isLayover(stay)) continue;
 
 		const geo = deps.geocoder.lookup(stay);
@@ -99,6 +108,23 @@ export function aggregateTimeline(
 	config: AggregateConfig = {},
 ): TravelData {
 	return aggregate(parseTimeline(json), deps, config);
+}
+
+/**
+ * Home locations to scrub: any explicit `home`, plus the distinct locations of
+ * "Inferred Home" visits (deduped to ~1 km). Handles moving house over the
+ * years — every home in the history is dropped, no coordinates required.
+ */
+function deriveHomePoints(stays: readonly Stay[], cfg: ResolvedConfig): LatLng[] {
+	const points = new Map<string, LatLng>();
+	if (cfg.home) points.set('explicit', cfg.home);
+	for (const s of stays) {
+		if (s.label && HOME_LABELS.includes(s.label) && cfg.dropLabels.includes(s.label)) {
+			const key = `${s.lat.toFixed(2)},${s.lng.toFixed(2)}`;
+			if (!points.has(key)) points.set(key, { lat: s.lat, lng: s.lng });
+		}
+	}
+	return [...points.values()];
 }
 
 function computeStats(places: readonly Place[], now: Date): Stats {

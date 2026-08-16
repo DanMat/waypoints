@@ -10,6 +10,8 @@ export interface Stay {
 	start: string;
 	/** ISO-8601 datetime. */
 	end: string;
+	/** Google's `semanticType` for the visit, e.g. "Inferred Home", when present. */
+	label?: string;
 }
 
 /** A point on Earth, in decimal degrees. */
@@ -33,7 +35,16 @@ export interface AggregateConfig {
 	layoverMaxHours?: number;
 	/** How close to an airport counts as "at the airport". Default 3 km. */
 	airportRadiusKm?: number;
+	/**
+	 * Visit labels (Google `semanticType`) to exclude entirely, and — for the
+	 * home labels — to drop anything within `homeRadiusKm` of. This scrubs home
+	 * and work without needing coordinates. Default: Home + Work (inferred too).
+	 */
+	dropLabels?: string[];
 }
+
+/** Labels treated as "home" for the radius-based scrub. */
+export const HOME_LABELS: readonly string[] = ['Home', 'Inferred Home'];
 
 export interface ResolvedConfig {
 	home?: LatLng;
@@ -41,6 +52,7 @@ export interface ResolvedConfig {
 	minStayMinutes: number;
 	layoverMaxHours: number;
 	airportRadiusKm: number;
+	dropLabels: string[];
 }
 
 export function resolveConfig(config: AggregateConfig = {}): ResolvedConfig {
@@ -50,5 +62,6 @@ export function resolveConfig(config: AggregateConfig = {}): ResolvedConfig {
 		minStayMinutes: config.minStayMinutes ?? 30,
 		layoverMaxHours: config.layoverMaxHours ?? 4,
 		airportRadiusKm: config.airportRadiusKm ?? 3,
+		dropLabels: config.dropLabels ?? ['Home', 'Inferred Home', 'Work', 'Inferred Work'],
 	};
 }

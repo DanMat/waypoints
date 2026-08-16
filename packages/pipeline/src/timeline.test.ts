@@ -73,6 +73,23 @@ describe('parseTimeline', () => {
 		expect(stays[0].start < stays[1].start).toBe(true);
 	});
 
+	it('parses the on-device format: top-level array, geo-string placeLocation, semanticType', () => {
+		const json = [
+			{
+				startTime: '2026-01-01T10:00:00Z',
+				endTime: '2026-01-01T15:00:00Z',
+				visit: {
+					topCandidate: { semanticType: 'Inferred Home', placeLocation: 'geo:51.5074,-0.1278' },
+				},
+			},
+			// activity/path segments carry no visit — ignored.
+			{ startTime: '2026-01-01T15:00:00Z', endTime: '2026-01-01T16:00:00Z', activity: {} },
+		];
+		const stays = parseTimeline(json);
+		expect(stays).toHaveLength(1);
+		expect(stays[0]).toMatchObject({ lat: 51.5074, lng: -0.1278, label: 'Inferred Home' });
+	});
+
 	it('returns [] for unrecognised input', () => {
 		expect(parseTimeline({ nonsense: true })).toEqual([]);
 		expect(parseTimeline(null)).toEqual([]);

@@ -98,6 +98,21 @@ describe('aggregate', () => {
 	it('sorts places by visit count', () => {
 		expect(places[0].city).toBe('London');
 	});
+
+	it('scrubs home/work by Google label and drops anything within the home radius', () => {
+		const labelled: Stay[] = [
+			// A "Home" visit at London coords → dropped, and defines the home point.
+			{ ...stay(51.5074, -0.1278, '2026-01-01T00:00:00Z', 10), label: 'Home' },
+			// An unlabelled London visit ~2 km away → dropped by the home radius.
+			stay(51.51, -0.1, '2026-02-01T00:00:00Z', 5),
+			// A "Work" visit elsewhere → dropped by label.
+			{ ...stay(35.6762, 139.6503, '2026-02-15T00:00:00Z', 8), label: 'Work' },
+			// Paris → kept.
+			stay(48.8566, 2.3522, '2026-03-01T00:00:00Z', 48),
+		];
+		const { places: p } = aggregate(labelled, deps, {});
+		expect(p.map((x) => x.city)).toEqual(['Paris']);
+	});
 });
 
 describe('aggregateTimeline', () => {
