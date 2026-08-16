@@ -68,8 +68,9 @@ function main() {
 	writeFileSync(join(out, 'stats.json'), JSON.stringify(stats));
 
 	const { totals } = stats;
+	const aroundWorld = (totals.distanceKm / 40075).toFixed(1);
 	console.log(
-		`✓ ${places.length} cities · ${totals.countries} countries · ${totals.continents}/7 continents · ${totals.nights} nights`,
+		`✓ ${places.length} cities · ${totals.countries} countries · ${totals.continents}/7 continents · ${totals.usStates}/50 US states · ${totals.nights} nights · ${aroundWorld}× around the world`,
 	);
 	console.log(`  wrote ${join(out, 'places.json')} and ${join(out, 'stats.json')}`);
 	for (const p of places.slice(0, 8)) {

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { FunFacts } from './components/FunFacts.js';
 import { PlaceList } from './components/PlaceList.js';
 import { StatTiles } from './components/StatTiles.js';
 import { WorldMap } from './components/WorldMap.js';
@@ -35,6 +36,7 @@ export function App() {
 
 			<StatTiles stats={data.stats} />
 			<WorldMap places={data.places} />
+			<FunFacts stats={data.stats} />
 			<PlaceList places={data.places} />
 
 			<footer>

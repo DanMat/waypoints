@@ -89,9 +89,20 @@ describe('aggregate', () => {
 	});
 
 	it('rolls up headline stats', () => {
-		expect(stats.totals).toEqual({ continents: 1, countries: 2, regions: 2, cities: 2, nights: 2 });
+		expect(stats.totals).toMatchObject({
+			continents: 1,
+			countries: 2,
+			regions: 2,
+			usStates: 0,
+			cities: 2,
+			nights: 2,
+		});
+		// London → Paris great-circle ≈ 344 km.
+		expect(stats.totals.distanceKm).toBeGreaterThan(330);
+		expect(stats.totals.distanceKm).toBeLessThan(360);
 		expect(stats.continents).toEqual(['Europe']);
 		expect(stats.countries).toEqual(['FR', 'GB']);
+		expect(stats.usStates).toEqual([]);
 		expect(stats.generatedAt).toBe('2026-08');
 	});
 

@@ -179,9 +179,18 @@ export const sampleData: TravelData = {
 	],
 	stats: {
 		generatedAt: '2026-08',
-		totals: { continents: 6, countries: 13, regions: 7, cities: 14, nights: 114 },
+		totals: {
+			continents: 6,
+			countries: 13,
+			regions: 7,
+			usStates: 2,
+			cities: 14,
+			nights: 114,
+			distanceKm: 189000,
+		},
 		continents: ['Africa', 'Asia', 'Europe', 'North America', 'Oceania', 'South America'],
 		countries: ['AE', 'AU', 'BR', 'ES', 'FR', 'GB', 'IS', 'JP', 'MX', 'SG', 'TH', 'US', 'ZA'],
+		usStates: ['California', 'New York'],
 	},
 };
 

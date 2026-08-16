@@ -131,13 +131,26 @@ function computeStats(places: readonly Place[], now: Date): Stats {
 	const continents = new Set<Continent>();
 	const countries = new Set<string>();
 	const regions = new Set<string>();
+	const usStates = new Set<string>();
 	let totalNights = 0;
 
 	for (const p of places) {
 		continents.add(p.continent);
 		countries.add(p.countryCode);
 		if (p.region) regions.add(`${p.countryCode}/${p.region}`);
+		// DC isn't a state, so it doesn't count toward "/50".
+		if (p.countryCode === 'US' && p.region && p.region !== 'District of Columbia') {
+			usStates.add(p.region);
+		}
 		totalNights += p.nights;
+	}
+
+	// Great-circle length of the trip, in first-visit order — the basis for the
+	// "× around the world" fun stat.
+	const ordered = [...places].sort((a, b) => a.firstVisit.localeCompare(b.firstVisit));
+	let distanceKm = 0;
+	for (let i = 1; i < ordered.length; i++) {
+		distanceKm += haversineKm(ordered[i - 1], ordered[i]);
 	}
 
 	return {
@@ -146,10 +159,13 @@ function computeStats(places: readonly Place[], now: Date): Stats {
 			continents: continents.size,
 			countries: countries.size,
 			regions: regions.size,
+			usStates: usStates.size,
 			cities: places.length,
 			nights: totalNights,
+			distanceKm: Math.round(distanceKm),
 		},
 		continents: [...continents].sort(),
 		countries: [...countries].sort(),
+		usStates: [...usStates].sort(),
 	};
 }

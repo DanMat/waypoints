@@ -65,13 +65,19 @@ export interface Stats {
 		continents: number;
 		countries: number;
 		regions: number;
+		/** Distinct US states (+ DC) visited, out of 50. */
+		usStates: number;
 		cities: number;
 		nights: number;
+		/** Great-circle distance across the trip, in km (basis for fun stats). */
+		distanceKm: number;
 	};
 	/** Which continents (so the UI can show "5 / 7" and highlight a globe). */
 	continents: Continent[];
 	/** ISO alpha-2 codes of countries visited. */
 	countries: string[];
+	/** Names of US states (+ DC) visited. */
+	usStates: string[];
 }
 
 /** The full public payload: what the Worker serves and the page renders. */

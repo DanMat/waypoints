@@ -5,8 +5,9 @@ export function StatTiles({ stats }: { stats: Stats }) {
 	const tiles = [
 		{ k: 'Continents', n: String(t.continents), sub: '/ 7', hl: true },
 		{ k: 'Countries', n: String(t.countries), sub: '/ 195' },
+		{ k: 'US states', n: String(t.usStates), sub: '/ 50' },
 		{ k: 'Cities', n: String(t.cities) },
-		{ k: 'States / regions', n: String(t.regions) },
+		{ k: 'Regions', n: String(t.regions) },
 		{ k: 'Nights away', n: String(t.nights) },
 	];
 
