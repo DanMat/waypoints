@@ -1,4 +1,4 @@
-import type { TravelData } from '@waypoints/shared';
+import type { TravelData } from '@danmat/waypoints-core';
 import { sampleData } from './sample.js';
 
 export interface LoadedData {

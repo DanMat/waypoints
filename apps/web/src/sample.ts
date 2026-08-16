@@ -1,4 +1,4 @@
-import type { TravelData } from '@waypoints/shared';
+import type { TravelData } from '@danmat/waypoints-core';
 
 /**
  * Demo data used until the live API is wired up (and as an offline fallback).

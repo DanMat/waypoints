@@ -12,20 +12,16 @@
     "lint": "biome check ."
   },
   "dependencies": {
-    "@waypoints/shared": "workspace:*",
-    "d3-geo": "^3.1.1",
+    "@danmat/waypoints-core": "^0.1.1",
+    "@danmat/waypoints-ui": "^0.1.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "topojson-client": "^3.1.0"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@testing-library/dom": "^10.0.0",
     "@testing-library/react": "^16.0.0",
-    "@types/d3-geo": "^3.1.1",
-    "@types/geojson": "^7946.0.16",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "@types/topojson-client": "^3.1.5",
     "@vitejs/plugin-react": "^6.0.0",
     "jsdom": "^29.0.0",
     "vite": "^8.0.0"

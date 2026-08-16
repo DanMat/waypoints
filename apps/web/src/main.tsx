@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import '@danmat/waypoints-ui/styles.css';
 import { App } from './App.js';
-import './styles.css';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {

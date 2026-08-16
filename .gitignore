@@ -10,8 +10,8 @@ coverage/
 .turbo/
 
 # generated datasets (rebuild with `pnpm prep:data`) + raw location data
-packages/pipeline/data/
-packages/pipeline/.tmp-data/
+packages/cli/data/
+packages/cli/.tmp-data/
 *.timeline.json
 
 # test artifacts (Playwright)
