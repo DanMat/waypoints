@@ -26,9 +26,6 @@ importers:
 
   apps/server:
     dependencies:
-      '@hono/node-server':
-        specifier: ^2.0.0
-        version: 2.1.1(hono@4.13.2)
       '@waypoints/shared':
         specifier: workspace:*
         version: link:../../packages/shared
@@ -39,9 +36,6 @@ importers:
       tsup:
         specifier: ^8.0.0
         version: 8.5.1(postcss@8.5.26)(tsx@4.23.12)(typescript@5.9.3)
-      tsx:
-        specifier: ^4.0.0
-        version: 4.23.12
 
   apps/web:
     dependencies:
@@ -553,12 +547,6 @@ packages:
     peerDependenciesMeta:
       '@noble/hashes':
         optional: true
-
-  '@hono/node-server@2.1.1':
-    resolution: {integrity: sha512-ELuehkj5VCBdgEw9zs+ivkKwyzzUCSQuE96YmiPvn1ECBoZCczbFXJLeEGMTYjphP6gydh4pHMqEYPVMYUVgQg==}
-    engines: {node: '>=20'}
-    peerDependencies:
-      hono: ^4
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -1789,10 +1777,6 @@ snapshots:
     optional: true
 
   '@exodus/bytes@1.15.1': {}
-
-  '@hono/node-server@2.1.1(hono@4.13.2)':
-    dependencies:
-      hono: 4.13.2
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:

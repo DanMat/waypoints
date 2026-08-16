@@ -1,0 +1,16 @@
+# Cloudflare Worker: serves the web app (static assets) + the /api/* routes,
+# reading aggregated data from R2. Deploy with `pnpm --filter @waypoints/server deploy`
+# (build the web app first: `pnpm --filter @waypoints/web build`).
+name = "waypoints"
+main = "src/worker.ts"
+compatibility_date = "2025-08-01"
+
+# The built web app, served for any non-API path.
+[assets]
+directory = "../web/dist"
+binding = "ASSETS"
+
+# Public aggregates (places.json / stats.json), written by the quarterly Action.
+[[r2_buckets]]
+binding = "DATA"
+bucket_name = "waypoints-data"

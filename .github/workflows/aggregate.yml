@@ -1,0 +1,43 @@
+name: Aggregate travel data
+
+# Quarterly (1st of Jan/Apr/Jul/Oct) + on demand. Reads the raw Google Timeline
+# export from a PRIVATE R2 bucket, aggregates it to sanitized city-level data,
+# and writes places.json / stats.json to the public-facing R2 bucket the Worker
+# serves. Raw location data never touches this repo.
+on:
+  schedule:
+    - cron: '0 0 1 */3 *'
+  workflow_dispatch:
+
+jobs:
+  aggregate:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      RAW_BUCKET: waypoints-raw
+      RAW_KEY: timeline.json
+      DATA_BUCKET: waypoints-data
+      # Optional: set repo secret HOME_LATLNG (e.g. "51.5,-0.12") to drop home.
+      HOME_LATLNG: ${{ secrets.HOME_LATLNG }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - name: Build offline datasets
+        run: pnpm prep:data
+      - name: Fetch raw export from private R2
+        run: npx --yes wrangler r2 object get "$RAW_BUCKET/$RAW_KEY" --file raw.timeline.json --remote
+      - name: Aggregate to sanitized city-level data
+        run: |
+          HOME_ARG=""
+          if [ -n "$HOME_LATLNG" ]; then HOME_ARG="--home $HOME_LATLNG"; fi
+          pnpm --filter @waypoints/pipeline exec tsx src/cli.ts raw.timeline.json --out out $HOME_ARG
+      - name: Publish aggregates to R2
+        run: |
+          npx --yes wrangler r2 object put "$DATA_BUCKET/places.json" --file out/places.json --content-type application/json --remote
+          npx --yes wrangler r2 object put "$DATA_BUCKET/stats.json" --file out/stats.json --content-type application/json --remote

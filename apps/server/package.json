@@ -4,20 +4,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "build": "tsup src/index.ts --format esm --clean",
-    "start": "node dist/index.js",
+    "dev": "npx --yes wrangler dev",
+    "build": "tsup src/worker.ts --format esm --clean",
+    "deploy": "npx --yes wrangler deploy",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "lint": "biome check ."
   },
   "dependencies": {
     "hono": "^4.5.0",
-    "@hono/node-server": "^2.0.0",
     "@waypoints/shared": "workspace:*"
   },
   "devDependencies": {
-    "tsx": "^4.0.0",
     "tsup": "^8.0.0"
   }
 }
