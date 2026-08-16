@@ -42,7 +42,7 @@ export function App() {
 						background: 'var(--accent-soft)',
 						border: '1px solid var(--accent)',
 						borderRadius: '999px',
-						padding: '0.4rem 0.9rem',
+						padding: '0.6rem 1.2rem',
 						textDecoration: 'none',
 						fontWeight: 600,
 						fontSize: '0.9rem',
@@ -52,7 +52,7 @@ export function App() {
 				</a>
 			</p>
 
-			<StatTiles stats={data.stats} />
+			<StatTiles data={data} />
 			<WorldMap places={data.places} />
 			<FunFacts stats={data.stats} />
 			<PlaceList places={data.places} />
