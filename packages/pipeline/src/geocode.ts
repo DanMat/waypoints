@@ -11,6 +11,8 @@ export interface City {
 	countryCode: string;
 	lat: number;
 	lng: number;
+	/** Population, used to prefer a metro over one of its districts. */
+	population?: number;
 }
 
 /** A resolved location: a city centroid, never the querying coordinate. */
@@ -30,44 +32,63 @@ export interface ReverseGeocoder {
 }
 
 /**
- * Offline reverse-geocoder: nearest city by great-circle distance. A linear
- * scan is fine here — there are thousands of cities but only a handful of
- * stays, and it keeps the data dependency to a plain array. The returned
+ * Offline reverse-geocoder over a plain array of cities. A linear scan is fine
+ * here — thousands of cities but only a handful of stays. The returned
  * coordinate is the *city's* centroid, so exact coordinates never leave the
  * pipeline.
+ *
+ * To avoid snapping to a district ("Eifuku") when the recognisable name is the
+ * metro ("Tokyo"), any city within `preferLargerWithinKm` of the point is a
+ * candidate and the highest-population one wins; otherwise the plain nearest
+ * city is used, subject to `maxDistanceKm`.
  */
 export class NearestCityGeocoder implements ReverseGeocoder {
 	private readonly cities: readonly City[];
 	private readonly maxDistanceKm: number;
+	private readonly preferLargerWithinKm: number;
 
-	constructor(cities: readonly City[], options: { maxDistanceKm?: number } = {}) {
+	constructor(
+		cities: readonly City[],
+		options: { maxDistanceKm?: number; preferLargerWithinKm?: number } = {},
+	) {
 		this.cities = cities;
 		this.maxDistanceKm = options.maxDistanceKm ?? 250;
+		this.preferLargerWithinKm = options.preferLargerWithinKm ?? 25;
 	}
 
 	lookup(point: LatLng): GeoResult | null {
-		let best: City | null = null;
-		let bestKm = Number.POSITIVE_INFINITY;
+		let nearest: City | null = null;
+		let nearestKm = Number.POSITIVE_INFINITY;
+		let largestNearby: City | null = null;
+		let largestPop = -1;
 
 		for (const city of this.cities) {
 			const km = haversineKm(point, city);
-			if (km < bestKm) {
-				bestKm = km;
-				best = city;
+			if (km < nearestKm) {
+				nearestKm = km;
+				nearest = city;
+			}
+			if (km <= this.preferLargerWithinKm) {
+				const pop = city.population ?? 0;
+				if (pop > largestPop) {
+					largestPop = pop;
+					largestNearby = city;
+				}
 			}
 		}
 
-		if (!best || bestKm > this.maxDistanceKm) {
+		if (!nearest || nearestKm > this.maxDistanceKm) {
 			return null;
 		}
 
+		const chosen = largestNearby ?? nearest;
 		return {
-			city: best.name,
-			region: best.region,
-			country: best.country,
-			countryCode: best.countryCode,
-			lat: best.lat,
-			lng: best.lng,
+			city: chosen.name,
+			region: chosen.region,
+			country: chosen.country,
+			countryCode: chosen.countryCode,
+			lat: chosen.lat,
+			lng: chosen.lng,
 		};
 	}
 }

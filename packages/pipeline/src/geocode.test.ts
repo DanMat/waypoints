@@ -48,4 +48,28 @@ describe('NearestCityGeocoder', () => {
 		// Middle of the Pacific — nearest listed city is thousands of km away.
 		expect(geo.lookup({ lat: -30, lng: -140 })).toBeNull();
 	});
+
+	it('prefers the larger metro over an adjacent district', () => {
+		const withDistrict: City[] = [
+			{
+				name: 'Eifuku',
+				country: 'Japan',
+				countryCode: 'JP',
+				lat: 35.6755,
+				lng: 139.6399,
+				population: 20000,
+			},
+			{
+				name: 'Tokyo',
+				country: 'Japan',
+				countryCode: 'JP',
+				lat: 35.6762,
+				lng: 139.6503,
+				population: 8000000,
+			},
+		];
+		const g = new NearestCityGeocoder(withDistrict);
+		// Query sits nearest to Eifuku, but Tokyo is within the metro radius.
+		expect(g.lookup({ lat: 35.6756, lng: 139.6402 })?.city).toBe('Tokyo');
+	});
 });

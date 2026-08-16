@@ -12,7 +12,9 @@
     "test": "turbo test",
     "lint": "turbo lint",
     "format": "biome check --write .",
-    "typecheck": "turbo typecheck"
+    "typecheck": "turbo typecheck",
+    "prep:data": "pnpm --filter @waypoints/pipeline prep:data",
+    "aggregate": "pnpm --filter @waypoints/pipeline aggregate"
   },
   "devDependencies": {
     "turbo": "^2.0.0",

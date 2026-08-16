@@ -9,6 +9,11 @@ coverage/
 *.tsbuildinfo
 .turbo/
 
+# generated datasets (rebuild with `pnpm prep:data`) + raw location data
+packages/pipeline/data/
+packages/pipeline/.tmp-data/
+*.timeline.json
+
 # test artifacts (Playwright)
 test-results/
 playwright-report/
