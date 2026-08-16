@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { describeHealth, type Health } from '@waypoints/shared';
+import { useEffect, useState } from 'react';
 
 export function App() {
 	const [health, setHealth] = useState<Health | null>(null);

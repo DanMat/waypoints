@@ -15,7 +15,7 @@
     "build": "tsup src/index.ts --format esm --dts --clean",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint ."
+    "lint": "biome check ."
   },
   "devDependencies": {
     "tsup": "^8.0.0"

@@ -13,9 +13,7 @@
     "packageManager": "pnpm",
     "lint": "biome",
     "release": "none",
-    "workflows": [
-      "ci"
-    ]
+    "workflows": ["ci"]
   },
   "baseline": {
     "schemaVersion": 1,

@@ -1,6 +1,6 @@
-import { Hono } from 'hono';
 import { serveStatic } from '@hono/node-server/serve-static';
 import type { Health } from '@waypoints/shared';
+import { Hono } from 'hono';
 
 export const app = new Hono();
 
