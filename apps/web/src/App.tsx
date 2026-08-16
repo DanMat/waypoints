@@ -1,8 +1,5 @@
+import { FunFacts, PlaceList, StatTiles, WorldMap } from '@danmat/waypoints-ui';
 import { useEffect, useState } from 'react';
-import { FunFacts } from './components/FunFacts.js';
-import { PlaceList } from './components/PlaceList.js';
-import { StatTiles } from './components/StatTiles.js';
-import { WorldMap } from './components/WorldMap.js';
 import { type LoadedData, loadTravelData } from './data.js';
 
 export function App() {

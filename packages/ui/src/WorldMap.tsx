@@ -3,7 +3,7 @@ import { type GeoSphere, geoGraticule10, geoInterpolate, geoNaturalEarth1, geoPa
 import type { FeatureCollection, Geometry } from 'geojson';
 import { useMemo } from 'react';
 import { feature } from 'topojson-client';
-import worldRaw from '../assets/countries-110m.json';
+import worldRaw from './assets/countries-110m.json';
 
 const WIDTH = 960;
 const HEIGHT = 480;

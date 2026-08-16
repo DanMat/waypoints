@@ -45,18 +45,15 @@ importers:
       '@danmat/waypoints-core':
         specifier: workspace:*
         version: link:../../packages/core
-      d3-geo:
-        specifier: ^3.1.1
-        version: 3.1.1
+      '@danmat/waypoints-ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       react:
         specifier: ^19.0.0
         version: 19.2.8
       react-dom:
         specifier: ^19.0.0
         version: 19.2.8(react@19.2.8)
-      topojson-client:
-        specifier: ^3.1.0
-        version: 3.1.0
     devDependencies:
       '@testing-library/dom':
         specifier: ^10.0.0
@@ -64,21 +61,12 @@ importers:
       '@testing-library/react':
         specifier: ^16.0.0
         version: 16.3.2(@testing-library/dom@10.4.1)(@types/react-dom@19.2.4(@types/react@19.2.18))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
-      '@types/d3-geo':
-        specifier: ^3.1.1
-        version: 3.1.1
-      '@types/geojson':
-        specifier: ^7946.0.16
-        version: 7946.0.16
       '@types/react':
         specifier: ^19.0.0
         version: 19.2.18
       '@types/react-dom':
         specifier: ^19.0.0
         version: 19.2.4(@types/react@19.2.18)
-      '@types/topojson-client':
-        specifier: ^3.1.5
-        version: 3.1.5
       '@vitejs/plugin-react':
         specifier: ^6.0.0
         version: 6.0.5(vite@8.2.1(@types/node@24.13.3)(esbuild@0.28.2)(tsx@4.23.12))
@@ -97,6 +85,43 @@ importers:
       tsx:
         specifier: ^4.0.0
         version: 4.23.12
+
+  packages/ui:
+    dependencies:
+      '@danmat/waypoints-core':
+        specifier: workspace:*
+        version: link:../core
+      d3-geo:
+        specifier: ^3.1.0
+        version: 3.1.1
+      topojson-client:
+        specifier: ^3.1.0
+        version: 3.1.0
+    devDependencies:
+      '@types/d3-geo':
+        specifier: ^3.1.0
+        version: 3.1.1
+      '@types/geojson':
+        specifier: ^7946.0.0
+        version: 7946.0.16
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.2.18
+      '@types/react-dom':
+        specifier: ^19.0.0
+        version: 19.2.4(@types/react@19.2.18)
+      '@types/topojson-client':
+        specifier: ^3.1.0
+        version: 3.1.5
+      react:
+        specifier: ^19.0.0
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.2.8(react@19.2.8)
+      tsup:
+        specifier: ^8.0.0
+        version: 8.5.1(postcss@8.5.26)(tsx@4.23.12)(typescript@5.9.3)
 
 packages:
 

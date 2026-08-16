@@ -1,0 +1,64 @@
+{
+  "name": "@danmat/waypoints-ui",
+  "version": "0.1.0",
+  "description": "React components for a Waypoints travel log — world map, stat tiles, fun-facts, and a sortable places table. Pairs with @danmat/waypoints-core.",
+  "keywords": [
+    "travel",
+    "react",
+    "map",
+    "d3-geo",
+    "dataviz"
+  ],
+  "license": "MIT",
+  "author": "DanMat",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DanMat/waypoints.git",
+    "directory": "packages/ui"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean && cp src/styles.css dist/styles.css",
+    "test": "vitest run --passWithNoTests",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check ."
+  },
+  "peerDependencies": {
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19"
+  },
+  "dependencies": {
+    "@danmat/waypoints-core": "workspace:*",
+    "d3-geo": "^3.1.0",
+    "topojson-client": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/d3-geo": "^3.1.0",
+    "@types/geojson": "^7946.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/topojson-client": "^3.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tsup": "^8.0.0"
+  }
+}
