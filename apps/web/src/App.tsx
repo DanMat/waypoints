@@ -31,6 +31,27 @@ export function App() {
 				{live ? null : <span className="badge">Demo data · live once my history is uploaded</span>}
 			</header>
 
+			<p style={{ margin: '0 0 1.5rem' }}>
+				<a
+					href="https://droppinmap.com"
+					target="_blank"
+					rel="noreferrer"
+					style={{
+						display: 'inline-block',
+						color: 'var(--accent)',
+						background: 'var(--accent-soft)',
+						border: '1px solid var(--accent)',
+						borderRadius: '999px',
+						padding: '0.4rem 0.9rem',
+						textDecoration: 'none',
+						fontWeight: 600,
+						fontSize: '0.9rem',
+					}}
+				>
+					📍 Map your own travels at droppinmap.com →
+				</a>
+			</p>
+
 			<StatTiles stats={data.stats} />
 			<WorldMap places={data.places} />
 			<FunFacts stats={data.stats} />
