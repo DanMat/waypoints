@@ -12,8 +12,8 @@
     "lint": "biome check ."
   },
   "dependencies": {
-    "@danmat/waypoints-core": "workspace:*",
-    "@danmat/waypoints-ui": "workspace:*",
+    "@danmat/waypoints-core": "^0.1.1",
+    "@danmat/waypoints-ui": "^0.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

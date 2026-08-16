@@ -7,12 +7,14 @@
 
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { isAbsolute, join } from 'node:path';
-import { aggregateTimeline } from './aggregate.js';
-import { AirportLayoverDetector } from './airports.js';
+import {
+	type AggregateConfig,
+	AirportLayoverDetector,
+	aggregateTimeline,
+	NearestCityGeocoder,
+	resolveConfig,
+} from '@danmat/waypoints-core';
 import { loadAirports, loadCities } from './data.js';
-import { NearestCityGeocoder } from './geocode.js';
-import type { AggregateConfig } from './types.js';
-import { resolveConfig } from './types.js';
 
 // pnpm's `--filter … exec` runs in the package dir, so resolve user-supplied
 // paths against the directory the command was actually invoked from.

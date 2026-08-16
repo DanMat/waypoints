@@ -30,8 +30,8 @@ importers:
   apps/server:
     dependencies:
       '@danmat/waypoints-core':
-        specifier: workspace:*
-        version: link:../../packages/core
+        specifier: ^0.1.1
+        version: 0.1.1
       hono:
         specifier: ^4.5.0
         version: 4.13.2
@@ -43,11 +43,11 @@ importers:
   apps/web:
     dependencies:
       '@danmat/waypoints-core':
-        specifier: workspace:*
-        version: link:../../packages/core
+        specifier: ^0.1.1
+        version: 0.1.1
       '@danmat/waypoints-ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
+        specifier: ^0.1.1
+        version: 0.1.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       react:
         specifier: ^19.0.0
         version: 19.2.8
@@ -77,51 +77,15 @@ importers:
         specifier: ^8.0.0
         version: 8.2.1(@types/node@24.13.3)(esbuild@0.28.2)(tsx@4.23.12)
 
-  packages/core:
+  packages/cli:
+    dependencies:
+      '@danmat/waypoints-core':
+        specifier: ^0.1.1
+        version: 0.1.1
     devDependencies:
-      tsup:
-        specifier: ^8.0.0
-        version: 8.5.1(postcss@8.5.26)(tsx@4.23.12)(typescript@5.9.3)
       tsx:
         specifier: ^4.0.0
         version: 4.23.12
-
-  packages/ui:
-    dependencies:
-      '@danmat/waypoints-core':
-        specifier: workspace:*
-        version: link:../core
-      d3-geo:
-        specifier: ^3.1.0
-        version: 3.1.1
-      topojson-client:
-        specifier: ^3.1.0
-        version: 3.1.0
-    devDependencies:
-      '@types/d3-geo':
-        specifier: ^3.1.0
-        version: 3.1.1
-      '@types/geojson':
-        specifier: ^7946.0.0
-        version: 7946.0.16
-      '@types/react':
-        specifier: ^19.0.0
-        version: 19.2.18
-      '@types/react-dom':
-        specifier: ^19.0.0
-        version: 19.2.4(@types/react@19.2.18)
-      '@types/topojson-client':
-        specifier: ^3.1.0
-        version: 3.1.5
-      react:
-        specifier: ^19.0.0
-        version: 19.2.8
-      react-dom:
-        specifier: ^19.0.0
-        version: 19.2.8(react@19.2.8)
-      tsup:
-        specifier: ^8.0.0
-        version: 8.5.1(postcss@8.5.26)(tsx@4.23.12)(typescript@5.9.3)
 
 packages:
 
@@ -244,6 +208,15 @@ packages:
   '@csstools/css-tokenizer@4.0.0':
     resolution: {integrity: sha512-QxULHAm7cNu72w97JUNCBFODFaXpbDg+dP8b/oWFAZ2MTRppA3U00Y2L1HqaS4J6yBqxwa/Y3nMBaxVKbB/NsA==}
     engines: {node: '>=20.19.0'}
+
+  '@danmat/waypoints-core@0.1.1':
+    resolution: {integrity: sha512-jwKZE6uFsmdlt/61UVwTkZWqV8anyuHBZjELHlL7coV8dAC/tZZWFSlxKQ0/tqkxGT5EphFP6Gy2ggJulqxWOQ==}
+
+  '@danmat/waypoints-ui@0.1.1':
+    resolution: {integrity: sha512-xS9M0/g2eWfgHxcg9kZtdisbKqb7JzqoLJgXMQx/Dv1obGB2pjm7jiLco6/VHdmyvBnnN8mmW0NV/XC/ztmAlw==}
+    peerDependencies:
+      react: ^18 || ^19
+      react-dom: ^18 || ^19
 
   '@esbuild/aix-ppc64@0.27.7':
     resolution: {integrity: sha512-EKX3Qwmhz1eMdEJokhALr0YiD0lhQNwDqkPYyPhiSwKrh7/4KRjQc04sZ8db+5DVVnZ1LmbNDI1uAMPEUBnQPg==}
@@ -858,17 +831,11 @@ packages:
   '@types/chai@5.2.3':
     resolution: {integrity: sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==}
 
-  '@types/d3-geo@3.1.1':
-    resolution: {integrity: sha512-65Emv9fQiQQqphLlRkuQ5ypPsOmWPhtBGCMv61JDPEPMvsx+gzhGf74yw1a78xFKPj6zw4AgQICJoQv0vK9M2w==}
-
   '@types/deep-eql@4.0.2':
     resolution: {integrity: sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw==}
 
   '@types/estree@1.0.9':
     resolution: {integrity: sha512-GhdPgy1el4/ImP05X05Uw4cw2/M93BCUmnEvWZNStlCzEKME4Fkk+YpoA5OiHNQmoS7Cafb8Xa3Pya8m1Qrzeg==}
-
-  '@types/geojson@7946.0.16':
-    resolution: {integrity: sha512-6C8nqWur3j98U6+lXDfTUWIfgvZU+EumvpHKcYjujKH7woYyLj2sUmff0tRhrqM7BohUw7Pz3ZB1jj2gW9Fvmg==}
 
   '@types/node@24.13.3':
     resolution: {integrity: sha512-Dh8vAsV36ig5wa9OX4pXvMc9D3Veibfw2wix0CUwYODLD8nkj9UsLjASr49nPg+2eKzxhBV+v7L8pXvT4e639Q==}
@@ -880,12 +847,6 @@ packages:
 
   '@types/react@19.2.18':
     resolution: {integrity: sha512-AnzbBERsrLKtk2XSfTbYRLjQPdy116Sty4q+T+Bp3IC4l6jNBvreVPAHmpq9qhXQM7CXZPjLVmGMw9sy+hxQ3w==}
-
-  '@types/topojson-client@3.1.5':
-    resolution: {integrity: sha512-C79rySTyPxnQNNguTZNI1Ct4D7IXgvyAs3p9HPecnl6mNrJ5+UhvGNYcZfpROYV2lMHI48kJPxwR+F9C6c7nmw==}
-
-  '@types/topojson-specification@1.0.5':
-    resolution: {integrity: sha512-C7KvcQh+C2nr6Y2Ub4YfgvWvWCgP2nOQMtfhlnwsRL4pYmmwzBS7HclGiS87eQfDOU/DLQpX6GEscviaz4yLIQ==}
 
   '@vitejs/plugin-react@6.0.5':
     resolution: {integrity: sha512-BOVzne/NL162sMdResB25mUv+vWMF5NoAjNf09TeGlE7ZpszZWSD3winycicLJw72yeVsoCn/2kOhEuCvEShMA==}
@@ -1638,6 +1599,16 @@ snapshots:
 
   '@csstools/css-tokenizer@4.0.0': {}
 
+  '@danmat/waypoints-core@0.1.1': {}
+
+  '@danmat/waypoints-ui@0.1.1(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+    dependencies:
+      '@danmat/waypoints-core': 0.1.1
+      d3-geo: 3.1.1
+      react: 19.2.8
+      react-dom: 19.2.8(react@19.2.8)
+      topojson-client: 3.1.0
+
   '@esbuild/aix-ppc64@0.27.7':
     optional: true
 
@@ -1982,15 +1953,9 @@ snapshots:
       '@types/deep-eql': 4.0.2
       assertion-error: 2.0.1
 
-  '@types/d3-geo@3.1.1':
-    dependencies:
-      '@types/geojson': 7946.0.16
-
   '@types/deep-eql@4.0.2': {}
 
   '@types/estree@1.0.9': {}
-
-  '@types/geojson@7946.0.16': {}
 
   '@types/node@24.13.3':
     dependencies:
@@ -2003,15 +1968,6 @@ snapshots:
   '@types/react@19.2.18':
     dependencies:
       csstype: 3.2.3
-
-  '@types/topojson-client@3.1.5':
-    dependencies:
-      '@types/geojson': 7946.0.16
-      '@types/topojson-specification': 1.0.5
-
-  '@types/topojson-specification@1.0.5':
-    dependencies:
-      '@types/geojson': 7946.0.16
 
   '@vitejs/plugin-react@6.0.5(vite@8.2.1(@types/node@24.13.3)(esbuild@0.28.2)(tsx@4.23.12))':
     dependencies:

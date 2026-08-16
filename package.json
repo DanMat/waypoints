@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "license": "MIT",
-  "packageManager": "pnpm@9.10.0",
+  "packageManager": "pnpm@10.34.5",
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
@@ -13,8 +13,8 @@
     "lint": "turbo lint",
     "format": "biome check --write .",
     "typecheck": "turbo typecheck",
-    "prep:data": "pnpm --filter @danmat/waypoints-core prep:data",
-    "aggregate": "tsx packages/core/src/cli.ts"
+    "prep:data": "pnpm --filter @waypoints/cli prep:data",
+    "aggregate": "tsx packages/cli/src/cli.ts"
   },
   "devDependencies": {
     "turbo": "^2.0.0",
