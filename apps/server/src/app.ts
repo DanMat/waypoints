@@ -31,7 +31,7 @@ async function serveJson(bucket: Bindings['DATA'], key: string): Promise<Respons
 	return new Response(object.body, {
 		headers: {
 			'content-type': 'application/json; charset=utf-8',
-			'cache-control': 'public, max-age=300, s-maxage=3600',
+			'cache-control': 'public, max-age=300, s-maxage=300',
 		},
 	});
 }

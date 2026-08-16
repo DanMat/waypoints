@@ -8,13 +8,14 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
-    "deploy": "pnpm --filter @waypoints/web build && pnpm --filter @waypoints/server deploy",
+    "deploy": "pnpm --filter @waypoints/web build && pnpm --filter @waypoints/server run deploy",
     "test": "turbo test",
     "lint": "turbo lint",
     "format": "biome check --write .",
     "typecheck": "turbo typecheck",
     "prep:data": "pnpm --filter @waypoints/cli prep:data",
-    "aggregate": "tsx packages/cli/src/cli.ts"
+    "aggregate": "tsx packages/cli/src/cli.ts",
+    "update:data": "node scripts/update-data.mjs"
   },
   "devDependencies": {
     "turbo": "^2.0.0",

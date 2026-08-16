@@ -39,6 +39,26 @@ export function App() {
 			<footer>
 				Aggregated {fmtGeneratedAt(data.stats.generatedAt)} · privacy-first: raw location data never
 				leaves a private, ephemeral store.
+				<br />
+				Made with{' '}
+				<a
+					href="https://droppinmap.com"
+					target="_blank"
+					rel="noreferrer"
+					style={{ color: 'var(--accent)' }}
+				>
+					droppin
+				</a>{' '}
+				— map your own travels at{' '}
+				<a
+					href="https://droppinmap.com"
+					target="_blank"
+					rel="noreferrer"
+					style={{ color: 'var(--accent)' }}
+				>
+					droppinmap.com
+				</a>
+				.
 			</footer>
 		</main>
 	);
