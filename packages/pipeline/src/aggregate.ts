@@ -81,6 +81,7 @@ export function aggregate(
 		}
 	}
 
+	const excluded = new Set(cfg.excludeStates);
 	const places: Place[] = [...groups.entries()]
 		.map(([id, g]) => ({
 			id,
@@ -96,9 +97,10 @@ export function aggregate(
 			firstVisit: month(g.first),
 			lastVisit: month(g.last),
 		}))
+		.filter((p) => !(p.countryCode === 'US' && p.region && excluded.has(p.region)))
 		.sort((a, b) => b.visits - a.visits || a.city.localeCompare(b.city));
 
-	return { places, stats: computeStats(places, deps.now ?? new Date()) };
+	return { places, stats: computeStats(places, deps.now ?? new Date(), cfg.includeStates) };
 }
 
 /** Parse a raw Google export and aggregate it in one step. */
@@ -127,11 +129,15 @@ function deriveHomePoints(stays: readonly Stay[], cfg: ResolvedConfig): LatLng[]
 	return [...points.values()];
 }
 
-function computeStats(places: readonly Place[], now: Date): Stats {
+function computeStats(
+	places: readonly Place[],
+	now: Date,
+	includeStates: readonly string[] = [],
+): Stats {
 	const continents = new Set<Continent>();
 	const countries = new Set<string>();
 	const regions = new Set<string>();
-	const usStates = new Set<string>();
+	const usStates = new Set<string>(includeStates);
 	let totalNights = 0;
 
 	for (const p of places) {

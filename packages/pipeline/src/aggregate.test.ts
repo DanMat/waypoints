@@ -110,6 +110,44 @@ describe('aggregate', () => {
 		expect(places[0].city).toBe('London');
 	});
 
+	it('applies state overrides: excludes pass-throughs, includes drive-throughs', () => {
+		const usCities: City[] = [
+			{
+				name: 'New Orleans',
+				region: 'Louisiana',
+				country: 'United States',
+				countryCode: 'US',
+				lat: 29.9547,
+				lng: -90.0751,
+				population: 389000,
+			},
+			{
+				name: 'Denver',
+				region: 'Colorado',
+				country: 'United States',
+				countryCode: 'US',
+				lat: 39.7392,
+				lng: -104.9903,
+				population: 700000,
+			},
+		];
+		const usDeps: AggregateDeps = {
+			geocoder: new NearestCityGeocoder(usCities),
+			now: new Date('2026-08-16'),
+		};
+		const usStays: Stay[] = [
+			stay(29.9547, -90.0751, '2020-01-01T00:00:00Z', 3), // New Orleans → excluded
+			stay(39.7392, -104.9903, '2020-02-01T00:00:00Z', 48), // Denver → kept
+		];
+		const { places: p, stats } = aggregate(usStays, usDeps, {
+			excludeStates: ['Louisiana'],
+			includeStates: ['Wyoming', 'Kansas'],
+		});
+		expect(p.map((x) => x.city)).toEqual(['Denver']); // New Orleans dropped
+		expect(stats.usStates).toEqual(['Colorado', 'Kansas', 'Wyoming']); // LA excluded, drive-throughs added
+		expect(stats.totals.usStates).toBe(3);
+	});
+
 	it('scrubs home/work by Google label and drops anything within the home radius', () => {
 		const labelled: Stay[] = [
 			// A "Home" visit at London coords → dropped, and defines the home point.

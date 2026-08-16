@@ -1,0 +1,5 @@
+{
+  "_comment": "Manual corrections to the US-states stat. Timeline can't tell a pass-through stop from a real visit, or catch states you only drove through. Curated from personal knowledge.",
+  "excludeStates": ["Louisiana"],
+  "includeStates": ["Iowa", "Kentucky", "Maine", "Nebraska", "Wyoming"]
+}

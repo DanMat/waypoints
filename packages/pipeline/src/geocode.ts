@@ -59,21 +59,11 @@ export class NearestCityGeocoder implements ReverseGeocoder {
 	lookup(point: LatLng): GeoResult | null {
 		let nearest: City | null = null;
 		let nearestKm = Number.POSITIVE_INFINITY;
-		let largestNearby: City | null = null;
-		let largestPop = -1;
-
 		for (const city of this.cities) {
 			const km = haversineKm(point, city);
 			if (km < nearestKm) {
 				nearestKm = km;
 				nearest = city;
-			}
-			if (km <= this.preferLargerWithinKm) {
-				const pop = city.population ?? 0;
-				if (pop > largestPop) {
-					largestPop = pop;
-					largestNearby = city;
-				}
 			}
 		}
 
@@ -81,7 +71,21 @@ export class NearestCityGeocoder implements ReverseGeocoder {
 			return null;
 		}
 
-		const chosen = largestNearby ?? nearest;
+		// Prefer a larger city within the metro radius — but only within the same
+		// country AND region as the nearest city, so a point just over a state line
+		// (e.g. New Jersey) isn't absorbed into a bigger neighbour (New York City).
+		let chosen: City = nearest;
+		let chosenPop = nearest.population ?? 0;
+		for (const city of this.cities) {
+			if (city.countryCode !== nearest.countryCode || city.region !== nearest.region) continue;
+			const pop = city.population ?? 0;
+			if (pop <= chosenPop) continue;
+			if (haversineKm(point, city) <= this.preferLargerWithinKm) {
+				chosen = city;
+				chosenPop = pop;
+			}
+		}
+
 		return {
 			city: chosen.name,
 			region: chosen.region,

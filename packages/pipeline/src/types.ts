@@ -41,6 +41,16 @@ export interface AggregateConfig {
 	 * and work without needing coordinates. Default: Home + Work (inferred too).
 	 */
 	dropLabels?: string[];
+	/**
+	 * US states to force-exclude — dropped from places and the states stat.
+	 * For pass-throughs the data counts as a stop but you don't count as a visit.
+	 */
+	excludeStates?: string[];
+	/**
+	 * US states to force-include in the states stat even with no recorded stop
+	 * (e.g. drive-throughs Timeline logged as movement only).
+	 */
+	includeStates?: string[];
 }
 
 /** Labels treated as "home" for the radius-based scrub. */
@@ -53,6 +63,8 @@ export interface ResolvedConfig {
 	layoverMaxHours: number;
 	airportRadiusKm: number;
 	dropLabels: string[];
+	excludeStates: string[];
+	includeStates: string[];
 }
 
 export function resolveConfig(config: AggregateConfig = {}): ResolvedConfig {
@@ -63,5 +75,7 @@ export function resolveConfig(config: AggregateConfig = {}): ResolvedConfig {
 		layoverMaxHours: config.layoverMaxHours ?? 4,
 		airportRadiusKm: config.airportRadiusKm ?? 3,
 		dropLabels: config.dropLabels ?? ['Home', 'Inferred Home', 'Work', 'Inferred Work'],
+		excludeStates: config.excludeStates ?? [],
+		includeStates: config.includeStates ?? [],
 	};
 }

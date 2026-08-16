@@ -72,4 +72,32 @@ describe('NearestCityGeocoder', () => {
 		// Query sits nearest to Eifuku, but Tokyo is within the metro radius.
 		expect(g.lookup({ lat: 35.6756, lng: 139.6402 })?.city).toBe('Tokyo');
 	});
+
+	it('does not absorb a point across a state line into a bigger neighbour', () => {
+		const cities: City[] = [
+			{
+				name: 'Jersey City',
+				region: 'New Jersey',
+				country: 'United States',
+				countryCode: 'US',
+				lat: 40.7282,
+				lng: -74.0776,
+				population: 292449,
+			},
+			{
+				name: 'New York City',
+				region: 'New York',
+				country: 'United States',
+				countryCode: 'US',
+				lat: 40.7128,
+				lng: -74.006,
+				population: 8175133,
+			},
+		];
+		const g = new NearestCityGeocoder(cities);
+		// A point nearest to Jersey City must stay in New Jersey, not snap to NYC.
+		const r = g.lookup({ lat: 40.73, lng: -74.06 });
+		expect(r?.city).toBe('Jersey City');
+		expect(r?.region).toBe('New Jersey');
+	});
 });

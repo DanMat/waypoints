@@ -36,7 +36,7 @@ jobs:
         run: |
           HOME_ARG=""
           if [ -n "$HOME_LATLNG" ]; then HOME_ARG="--home $HOME_LATLNG"; fi
-          pnpm --filter @waypoints/pipeline exec tsx src/cli.ts raw.timeline.json --out out $HOME_ARG
+          pnpm aggregate -- raw.timeline.json --out out --overrides overrides.json $HOME_ARG
       - name: Publish aggregates to R2
         run: |
           npx --yes wrangler r2 object put "$DATA_BUCKET/places.json" --file out/places.json --content-type application/json --remote

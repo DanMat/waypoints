@@ -1,18 +1,23 @@
 #!/usr/bin/env node
 // waypoints aggregate <export.json> [--out dir] [--home "lat,lng"] [--home-radius km]
-//   [--min-stay min] [--layover-max hours] [--airport-radius km]
+//   [--min-stay min] [--layover-max hours] [--airport-radius km] [--overrides file.json]
 //
 // Reads a raw Google Timeline export locally, produces the sanitized
 // places.json + stats.json. The raw file never leaves your machine.
 
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { isAbsolute, join } from 'node:path';
 import { aggregateTimeline } from './aggregate.js';
 import { AirportLayoverDetector } from './airports.js';
 import { loadAirports, loadCities } from './data.js';
 import { NearestCityGeocoder } from './geocode.js';
 import type { AggregateConfig } from './types.js';
 import { resolveConfig } from './types.js';
+
+// pnpm's `--filter … exec` runs in the package dir, so resolve user-supplied
+// paths against the directory the command was actually invoked from.
+const baseDir = process.env.INIT_CWD ?? process.cwd();
+const resolvePath = (p: string): string => (isAbsolute(p) ? p : join(baseDir, p));
 
 function parseArgs(argv: string[]): { input?: string; out: string; config: AggregateConfig } {
 	const config: AggregateConfig = {};
@@ -42,6 +47,12 @@ function parseArgs(argv: string[]): { input?: string; out: string; config: Aggre
 			case '--airport-radius':
 				config.airportRadiusKm = Number(next());
 				break;
+			case '--overrides': {
+				const o = JSON.parse(readFileSync(resolvePath(next()), 'utf8'));
+				if (Array.isArray(o.excludeStates)) config.excludeStates = o.excludeStates;
+				if (Array.isArray(o.includeStates)) config.includeStates = o.includeStates;
+				break;
+			}
 			default:
 				if (!arg.startsWith('--')) input = arg;
 		}
@@ -60,19 +71,20 @@ function main() {
 	const geocoder = new NearestCityGeocoder(loadCities());
 	const layoverDetector = new AirportLayoverDetector(loadAirports(), cfg);
 
-	const raw = JSON.parse(readFileSync(input, 'utf8'));
+	const raw = JSON.parse(readFileSync(resolvePath(input), 'utf8'));
 	const { places, stats } = aggregateTimeline(raw, { geocoder, layoverDetector }, config);
 
-	mkdirSync(out, { recursive: true });
-	writeFileSync(join(out, 'places.json'), JSON.stringify(places));
-	writeFileSync(join(out, 'stats.json'), JSON.stringify(stats));
+	const outDir = resolvePath(out);
+	mkdirSync(outDir, { recursive: true });
+	writeFileSync(join(outDir, 'places.json'), JSON.stringify(places));
+	writeFileSync(join(outDir, 'stats.json'), JSON.stringify(stats));
 
 	const { totals } = stats;
 	const aroundWorld = (totals.distanceKm / 40075).toFixed(1);
 	console.log(
 		`✓ ${places.length} cities · ${totals.countries} countries · ${totals.continents}/7 continents · ${totals.usStates}/50 US states · ${totals.nights} nights · ${aroundWorld}× around the world`,
 	);
-	console.log(`  wrote ${join(out, 'places.json')} and ${join(out, 'stats.json')}`);
+	console.log(`  wrote ${join(outDir, 'places.json')} and ${join(outDir, 'stats.json')}`);
 	for (const p of places.slice(0, 8)) {
 		console.log(`  · ${p.city}, ${p.country} — ${p.visits} visit(s)`);
 	}

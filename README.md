@@ -51,11 +51,16 @@ Your raw export never leaves your machine.
 ```sh
 pnpm prep:data                                   # download offline datasets (GeoNames + OurAirports)
 pnpm aggregate -- ~/Downloads/timeline.json \
-  --out apps/web/public --home "51.5,-0.12"      # → places.json + stats.json
+  --out apps/web/public --overrides overrides.json   # → places.json + stats.json
 ```
 
-Flags: `--home "lat,lng"` (dropped from output), `--home-radius`, `--min-stay`,
-`--layover-max`, `--airport-radius`.
+Flags: `--home "lat,lng"` (dropped from output — though Home/Work visits are
+scrubbed automatically from Google's labels), `--home-radius`, `--min-stay`,
+`--layover-max`, `--airport-radius`, `--overrides <file>`.
+
+`overrides.json` holds manual corrections Timeline can't infer — `excludeStates`
+(pass-through stops that aren't real visits) and `includeStates` (states you
+drove through with no recorded stop). It only affects the US-states stat.
 
 ## Deploy (Cloudflare)
 
