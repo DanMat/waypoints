@@ -31,7 +31,7 @@ export function App() {
 				{live ? null : <span className="badge">Demo data · live once my history is uploaded</span>}
 			</header>
 
-			<p style={{ margin: '0 0 1.5rem' }}>
+			<p style={{ margin: '1.5rem 0 0.5rem' }}>
 				<a
 					href="https://droppinmap.com"
 					target="_blank"
@@ -42,8 +42,7 @@ export function App() {
 						background: 'var(--accent-soft)',
 						border: '1px solid var(--accent)',
 						borderRadius: '999px',
-						padding: '0.75rem 1.4rem',
-						lineHeight: 1.2,
+						padding: '0.4rem 0.9rem',
 						textDecoration: 'none',
 						fontWeight: 600,
 						fontSize: '0.9rem',
